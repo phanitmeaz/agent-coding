@@ -1,0 +1,15 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "writer",
+  "agents": {
+    "writer": { "mode": "primary" },
+    "reviewer": {
+      "description": "Reviews current changes",
+      "mode": "subagent",
+      "system": "Report findings in severity order.",
+      "permissions": [
+        { "action": "edit", "resource": "*", "effect": "deny" },
+      ]
+    }
+  }
+}

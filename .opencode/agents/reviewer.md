@@ -1,0 +1,10 @@
+description: Reviews changes for correctness and regressions 
+mode: subagent
+model: anthropic/claude-sonnet-4-5#high
+permissions:
+  - action: edit
+    resource: "*"
+    effect: deny
+  - action: shell
+    resource: "*"
+    effect: deny
