@@ -294,90 +294,125 @@ After implementation:
 
 Do not claim a task is complete if the project does not compile unless the failure is unrelated and clearly documented.
 
-## Git workflow
+## Automatic Git and Pull Request Workflow
 
-Before starting:
+For every coding task, automatically complete the Git workflow after
+implementation and verification.
 
-- inspect git status
-- inspect the current branch
-- inspect recent commits
+### Target branch
 
-Never overwrite or discard the user's existing uncommitted work.
+All Pull Requests MUST target:
 
-Do not use destructive commands such as:
+main
+
+Never create a PR targeting another branch unless explicitly requested.
+
+### Workflow
+
+For every task:
+
+1. Check current git status.
+2. Check the current branch.
+3. Do not discard existing user changes.
+4. Create a new task branch from the latest `main`.
+
+Branch naming:
+
+- feature/<description>
+- fix/<description>
+- refactor/<description>
+- test/<description>
+
+Examples:
+
+feature/add-customer-search
+fix/payment-validation
+refactor-transaction-service
+
+5. Implement the task.
+6. Add/update tests.
+7. Run the appropriate Maven tests.
+8. Run the Maven build if appropriate.
+9. Review git diff.
+10. Ensure only task-related files are changed.
+11. Commit the changes.
+12. Push the task branch to the remote.
+13. Automatically create a Pull Request:
+
+Base branch:
+main
+
+Head branch:
+current task branch
+
+14. PR title should use Conventional Commits format.
+
+Examples:
+
+feat: add customer search
+fix: handle duplicate transaction reference
+refactor: simplify payment service
+
+15. PR description:
+
+## Summary
+
+Brief explanation of the change.
+
+## Implementation
+
+Important implementation details.
+
+## Testing
+
+Tests/build commands executed and their results.
+
+## Notes
+
+Important assumptions, limitations, or follow-up work.
+
+### Git safety
+
+Never:
 
 - git reset --hard
 - git clean -fd
 - git checkout -- .
 - git restore .
+- force push
+- overwrite existing user changes
 
-unless explicitly requested by the user.
+Never include unrelated changes in the commit or Pull Request.
 
-## Implementation workflow
+If the working tree contains unrelated user changes, preserve them.
 
-For each task:
+### Verification
 
-1. Understand the requirement.
-2. Inspect relevant code.
-3. Make a short implementation plan.
-4. Implement the smallest appropriate change.
-5. Run tests.
-6. Fix failures.
-7. Review git diff.
-8. Check for accidental changes.
-9. Summarize the implementation.
+Do not create the Pull Request if:
 
-## Git commit
+- the implementation does not compile
+- tests introduced by the task are failing
+- task-related tests are failing
+- the final diff contains unrelated changes
 
-When the task is complete and tests pass:
+If a pre-existing unrelated test/build failure prevents verification,
+report it clearly.
 
-Create a focused commit.
+### PR automation
 
-Commit messages should describe the change.
+The user does NOT need to explicitly request a Pull Request.
 
-Examples:
+Creating the Pull Request is part of the normal completion workflow.
 
-feat: add customer transaction endpoint
+The normal task lifecycle is:
 
-fix: handle duplicate transaction reference
-
-refactor: simplify payment validation
-
-test: add transaction service tests
-
-Do not combine unrelated changes into one commit.
-
-## Pull Request
-
-When the user explicitly asks to create a PR:
-
-1. Verify tests/build pass.
-2. Review git diff.
-3. Verify the branch contains only changes related to the task.
-4. Create a feature/fix branch if necessary.
-5. Commit the changes.
-6. Push the branch.
-7. Create the pull request.
-
-The PR description should contain:
-
-### Summary
-
-What was changed.
-
-### Implementation
-
-Important technical changes.
-
-### Testing
-
-Commands that were executed and their results.
-
-### Notes
-
-Any limitations, assumptions, or follow-up work.
-
-Never create a PR containing unrelated user changes.
+Implement
+→ Test
+→ Review diff
+→ Branch
+→ Commit
+→ Push
+→ Pull Request → main
 
 ## Important behavior
 
