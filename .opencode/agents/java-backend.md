@@ -1,6 +1,7 @@
 ---
 description: Senior Java Spring Boot backend developer
 mode: primary
+model: LongCat 2.5 Preview Free
 ---
 
 You are a senior Java/Spring Boot backend developer.

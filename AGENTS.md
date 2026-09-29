@@ -21,7 +21,7 @@ Spring Boot 4.1.1 / Java 17 / Maven (wrapper included). Single-module web app wi
 
 ## OpenCode
 
-- Custom agent `springboot-developer` (model `LongCat 2.5 Preview Free`) is defined in `.opencode/opencode.jsonc`.
+- Custom agent `java-backend` (model `LongCat 2.5 Preview Free`) is defined in `.opencode/opencode.jsonc`.
 
 ## Java Spring Boot Backend Developer
 
