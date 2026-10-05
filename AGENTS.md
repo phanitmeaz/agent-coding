@@ -294,125 +294,175 @@ After implementation:
 
 Do not claim a task is complete if the project does not compile unless the failure is unrelated and clearly documented.
 
-## Automatic Git and Pull Request Workflow
+# GitHub Issue → Implementation → Pull Request Workflow
 
-For every coding task, automatically complete the Git workflow after
-implementation and verification.
+When the user asks you to implement, fix, or work on a GitHub issue:
 
-### Target branch
-
-All Pull Requests MUST target:
-
-main
-
-Never create a PR targeting another branch unless explicitly requested.
-
-### Workflow
-
-For every task:
-
-1. Check current git status.
-2. Check the current branch.
-3. Do not discard existing user changes.
-4. Create a new task branch from the latest `main`.
+1. Identify the requested GitHub issue.
+2. Read the issue completely using the GitHub MCP server.
+3. Inspect the repository and existing implementation locally.
+4. Understand the current architecture before making changes.
+5. Create a dedicated branch from `main`.
 
 Branch naming:
 
-- feature/<description>
-- fix/<description>
-- refactor/<description>
-- test/<description>
+- `feature/<short-description>`
+- `fix/<short-description>`
+- `refactor/<short-description>`
+- `test/<short-description>`
 
-Examples:
+Never work directly on `main`.
 
-feature/add-customer-search
-fix/payment-validation
-refactor-transaction-service
+6. Implement the requested change.
+7. Add or update tests where appropriate.
+8. Run the relevant Maven tests.
 
-5. Implement the task.
-6. Add/update tests.
-7. Run the appropriate Maven tests.
-8. Run the Maven build if appropriate.
-9. Review git diff.
-10. Ensure only task-related files are changed.
+Prefer:
+
+    ./mvnw test
+
+or, if the project does not contain Maven Wrapper:
+
+    mvn test
+
+9. If tests fail:
+
+- investigate the failure
+- fix the implementation
+- rerun the tests
+
+Do not simply ignore test failures.
+
+10. Review the final Git diff.
+
+Check for:
+
+- accidental changes
+- debugging code
+- secrets
+- unnecessary dependencies
+- unrelated modifications
+- formatting problems
+
 11. Commit the changes.
-12. Push the task branch to the remote.
-13. Automatically create a Pull Request:
 
-Base branch:
-main
+Use a clear commit message such as:
 
-Head branch:
-current task branch
+    fix: resolve customer authentication issue
 
-14. PR title should use Conventional Commits format.
+or:
 
-Examples:
+    feat: add customer greeting endpoint
 
-feat: add customer search
-fix: handle duplicate transaction reference
-refactor: simplify payment service
+12. Push the branch to GitHub.
 
-15. PR description:
+13. Create a Pull Request using the GitHub MCP server.
 
-## Summary
+The PR must target:
 
-Brief explanation of the change.
+    main
 
-## Implementation
+14. Link the GitHub issue in the PR description.
 
-Important implementation details.
+Use GitHub's closing syntax when appropriate:
 
-## Testing
+    Closes #<issue-number>
 
-Tests/build commands executed and their results.
+15. The PR description should contain:
 
-## Notes
+    ## Summary
 
-Important assumptions, limitations, or follow-up work.
+    - What was changed
+    - Why it was changed
 
-### Git safety
+    ## Testing
 
-Never:
+    - Tests that were executed
+    - Test result
 
-- git reset --hard
-- git clean -fd
-- git checkout -- .
-- git restore .
-- force push
-- overwrite existing user changes
+    ## Related Issue
 
-Never include unrelated changes in the commit or Pull Request.
+    Closes #<issue-number>
 
-If the working tree contains unrelated user changes, preserve them.
+16. After creating the PR, report:
 
-### Verification
+- branch name
+- commit hash
+- tests executed
+- PR URL
+- issue number
 
-Do not create the Pull Request if:
+---
 
-- the implementation does not compile
-- tests introduced by the task are failing
-- task-related tests are failing
-- the final diff contains unrelated changes
+# Git Safety
 
-If a pre-existing unrelated test/build failure prevents verification,
-report it clearly.
+Before changing anything:
 
-### PR automation
+    git status
+    git branch --show-current
 
-The user does NOT need to explicitly request a Pull Request.
+Never destroy existing user work.
 
-Creating the Pull Request is part of the normal completion workflow.
+Never use:
 
-The normal task lifecycle is:
+    git reset --hard
+    git clean -fd
+    git push --force
+    git push --force-with-lease
 
-Implement
-→ Test
-→ Review diff
-→ Branch
-→ Commit
-→ Push
-→ Pull Request → main
+unless the user explicitly requests it.
+
+Do not overwrite unrelated uncommitted changes.
+
+If unrelated user changes already exist in the working tree, preserve them.
+
+---
+
+# Implementation Rules
+
+Before coding:
+
+1. Read the relevant classes.
+2. Find existing patterns.
+3. Follow existing naming conventions.
+4. Reuse existing services/utilities where appropriate.
+5. Avoid unnecessary refactoring.
+
+Prefer small, focused changes.
+
+Do not rewrite working code without a reason.
+
+---
+
+# Testing
+
+For every implementation:
+
+1. Run relevant unit tests.
+2. Run integration tests when applicable.
+3. Run the full Maven test suite when practical.
+
+If tests cannot be executed, explain why in the final response and PR.
+
+---
+
+# Pull Request
+
+Before creating a PR:
+
+1. Verify branch is not `main`.
+2. Verify the working tree contains only intended changes.
+3. Review `git diff`.
+4. Verify tests pass.
+5. Check the repository for a PR template.
+
+If a PR template exists, follow it.
+
+PR target branch is always:
+
+    main
+
+Create the PR automatically after successful implementation unless the user explicitly asks you not to create one.
 
 ## Important behavior
 
