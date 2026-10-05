@@ -7,7 +7,7 @@
       "enabled": true,
       "oauth": false,
       "headers": {
-        "Authorization": "Bearer {env:GITHUB_PAT}"
+        "Authorization": "Bearer {env:GITHUB_PA}"
       }
     }
   }
