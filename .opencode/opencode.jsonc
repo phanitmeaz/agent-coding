@@ -7,7 +7,7 @@
       "enabled": true,
       "oauth": false,
       "headers": {
-        "Authorization": "Bearer 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"
+        "Authorization": "Bearer {env:GITHUB_PAT}"
       }
     }
   }
