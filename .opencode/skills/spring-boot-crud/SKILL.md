@@ -1,8 +1,6 @@
 ---
 name: Generate Full CRUD
 description: Generate full CRUD from a database schema.
-metadata:
-  opencode/autoinvoke: "true"
 ---
 
 ## Workflow
