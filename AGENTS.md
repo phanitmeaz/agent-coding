@@ -53,6 +53,25 @@ Typical technologies may include:
 
 Do NOT introduce a new framework or library unless there is a clear reason.
 
+## Project Structure
+Some Project folders are already created for you. If the directory not yet exist, create it.
+
+- Main class location : src/main/java/com/example/demo/
+- Controller class location: src/main/java/com/example/demo/controller/
+- Service class location: src/main/java/com/example/demo/service/
+- Service Implementation class location: src/main/java/com/example/demo/service/impl/
+- Repository class location: src/main/java/com/example/demo/repository/
+- Entity class location: src/main/java/com/example/demo/entity/
+- DTO Request Location : src/main/java/com/example/demo/dto/request/
+- DTO Response Location : src/main/java/com/example/demo/dto/response/
+- Mapper Location : src/main/java/com/example/demo/mapper/
+
+## Console Log
+- frameworks: import lombok.extern.slf4j.Slf4j;
+- annotated with @Slf4j
+- always use log.debug()
+- log only abstract methods in interfaces
+
 ## Before changing code
 
 Always:
